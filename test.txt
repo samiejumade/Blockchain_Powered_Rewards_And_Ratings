@@ -1,0 +1,512 @@
+index.html  ==>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Re-Reviews</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- Application -->
+  <link href="css/app.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="jumbotron text-center">
+        <section className="search-section home-search">
+            <div className="masthead text-center">
+               <div className="container">
+                 <div className="row">
+                    <div className="col-lg-8 mx-md-auto">
+                       <h1 style="text-align: left;">CHAIN REVIEWS</h1>
+                       <p style="text-align: left; font-size:18px" className="lead text-muted">BLOCKCHAIN-POWERED REVIEWS & REWARDS SYSTEM </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+         </section>
+    </div>
+
+    <div class="col-md-12" id="review-list">
+      <div class="row">
+        <div class="col-lg-12" style="background-color: #677083 !important;color: white; margin-bottom: 21px">
+          <p id="account" class="welcome pull-right" style="padding-top: 11px;"></p>
+          <p id="accountBalance" class="welcome pull-left" style="padding-top: 11px;"></p>
+        </div>
+      </div>
+
+      <div class="row panel panel-default">
+        <div class="panel-heading clearfix" style="background-color: white !important;">
+          <div class="panel-title">
+            <button class="btn btn-info btn-lg pull-left" data-toggle="collapse" data-target="#events" aria-expanded="false" aria-controls="events">Log</button>
+            <button class="btn btn-info btn-lg center" data-toggle="collapse" data-target="#daiconversion" aria-expanded="false" style="margin-left: 348px;">Dai Conversion</button>
+            <button class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#addReview">Add My Review</button>
+          </div>
+        </div>
+        <ul id="events" class="collapse list-group"></ul>
+      </div>
+
+      <div id="reviewsRow" class="row">
+        <!-- Reviews LOAD HERE -->
+      </div>
+    </div>
+  </div>
+
+  <div id="reviewTemplate" style="display: none;">
+    <div class="row-lg-12">
+      <div class="panel panel-default panel-article">
+        <div class="panel-heading" style="background-color: skyblue !important;">
+          <h3 class="panel-title"></h3>
+        </div>
+        <div class="panel-body" id="js-panel-body-split">
+            <div class="col-sm-3 col-md-6">
+                <strong>Comments</strong>: <span class="review-description"></span><br/>
+                <strong>Review Added by</strong>: <span class="review-seller"></span><br/>
+                <strong>Upvotes</strong>: <span class="review-upvotes"></span><br/>
+                <strong>Rewards</strong>: <span class="review-rewards"></span><br/>
+                <strong>Downvotes</strong>: <span class="review-downvotes"></span><br/>
+            </div>
+            <div class="col-sm-9 col-md-6">
+              <img src="" class="js-image-url" align="right" alt="" height="111" width="116" /> 
+            </div>
+
+
+        </div>
+        <div class="panel-footer js-review-footer" style="background-color: white !important;">
+          <button type="button" style="background-color: grey !important; border-color: gray !important" class="btn btn-primary btn-success btn-buy js-upvote" data-flag="upflag" onclick="App.viewReview('upflag'); return false;">Upvote</button>
+          <button type="button" style="background-color: grey !important; border-color: gray !important" class="btn btn-primary btn-success btn-buy js-upvote" data-flag="downflag" onclick="App.viewReview('downflag'); return false;">Downvote</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal form to publish a review -->
+  <div class="modal fade" id="addReview" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add your reviews</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <form>
+                <div class="form-group">
+                  <label for="review_name">Product / Service Name</label>
+                  <input type="text" class="form-control" id="review_name" placeholder="Enter the serive/product name, you want to review">
+                </div>
+                <div class="form-group">
+                  <label for="description">Comments</label>
+                  <textarea type="text" class="form-control vresize" id="review_description" placeholder="Describe your experience" maxlength="255"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="memories">Your Memories</label>
+                  <input className="form-control" type="file" name="memories" id="memories" /> </div>
+                  <button type="button" class="btn btn-primary btn-success js-uploaded-hash" data-hash="" onclick="App.uploaddoc(); return false;" style="background-color: #5bc0de; border-color: #5bc0de;">Upload</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" onclick="App.addReview(); return false;" style="background-color: #5bc0de; border-color: #5bc0de;">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer" class="container">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="navbar-inner navbar-content-center text-center">
+        <p class="text-muted" credit><a href="#">EthExplorers</a> - &copy; 2024 - <a href="https://github.com/ethexplorers" class="fa fa-github" aria-hidden="true"></a></p>
+
+      </div>
+    </nav>
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/jquery.PersistPlugin.js"></script>
+  <script src="js/Buffer.js"></script>
+  <script src="https://unpkg.com/ipfs-api/dist/index.min.js"></script>
+  <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
+ integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
+ crossorigin="anonymous"></script> -->
+
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/app.js"></script>
+
+
+<script>
+    const App = {
+      uploaddoc: async function() {
+        const memoriesFile = document.getElementById('memories').files[0];
+        if (!memoriesFile) {
+          swal('Please select a file to upload');
+          return;
+        }
+        const formData = new FormData();
+        formData.append('file', memoriesFile);
+
+        const pinataApiKey = 'ecc51856aa2be3341c63';
+        const pinataSecretApiKey = '9b5b368577f5e043b81dd6383314834fbd8e2404760fc5dc0a0791deba489342';
+
+        try {
+          const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+            maxContentLength: 'Infinity',
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+              pinata_api_key: pinataApiKey,
+              pinata_secret_api_key: pinataSecretApiKey,
+            },
+          });
+
+          const hash = response.data.IpfsHash;
+          swal('File uploaded successfully!', `IPFS Hash: ${hash}`, 'success');
+        } catch (error) {
+          swal('Error uploading file', error.message, 'error');
+        }
+      },
+
+      addReview: function() {
+        // Existing logic to submit a review
+        
+      }
+    };
+  </script>̉
+
+</body>
+
+</html>
+
+
+app.js ===>
+
+App = {
+  web3Provider: null,
+  contracts: {},
+  account: 0x0,
+  loading: false,
+
+  init: async function() {
+    await App.initWeb3();
+    await App.checkNetwork();
+    return App.initContract();
+  },
+
+  initWeb3: async function() {
+    if (window.ethereum) {
+      App.web3Provider = window.ethereum;
+      try {
+        // Request account access if needed
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+      } catch (error) {
+        // User denied account access
+        console.error("User denied account access");
+      }
+    } else if (window.web3) {
+      App.web3Provider = window.web3.currentProvider;
+    } else {
+      // If no injected web3 instance is detected, fall back to Ganache
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+    }
+    web3 = new Web3(App.web3Provider);
+
+    App.displayAccountInfo();
+    return App.initContract();
+  },
+
+  displayAccountInfo: async function() {
+    try {
+      const accounts = await web3.eth.getAccounts();
+      if (accounts.length === 0) {
+        console.error("No accounts found");
+        return;
+      }
+      App.account = accounts[0];
+      $("#account").text(App.account);
+
+      const balance = await web3.eth.getBalance(App.account);
+      $("#accountBalance").text(web3.utils.fromWei(balance, "ether") + " ETH");
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  checkNetwork: async function() {
+    const networkId = await web3.eth.net.getId();
+    if (networkId !== 5777) { // Change 5777 to your network ID
+      alert("Please connect to the correct network");
+    }
+  },
+
+  initContract: function() {
+    $.getJSON('ReReviews.json', function(reReviewsArtifact) {
+      App.contracts.ReReviews = TruffleContract(reReviewsArtifact);
+      App.contracts.ReReviews.setProvider(App.web3Provider);
+      App.listenToEvents();
+      return App.reloadReviews();
+    });
+  },
+
+  reloadReviews: function() {
+    if (App.loading) {
+      return;
+    }
+    App.loading = true;
+    App.displayAccountInfo();
+
+    var reReviewInstance;
+
+    App.contracts.ReReviews.deployed().then(function(instance) {
+      reReviewInstance = instance;
+      return reReviewInstance.getReviewsToView();
+    }).then(function(productIds) {
+      var reviewsRow = $('#reviewsRow');
+      reviewsRow.empty();
+
+      for (var i = 0; i < productIds.length; i++) {
+        var productId = productIds[i];
+        
+        reReviewInstance.reviews(productId.toNumber()).then(function(product) {
+          App.displayReview(
+            product[0],
+            product[1],
+            product[3],
+            product[4],
+            product[5],
+            product[6],
+            product[7],
+            product[8]
+          );
+        });
+      }
+      App.loading = false;
+    }).catch(function(err) {
+      console.log(err.message);
+      App.loading = false;
+    });
+  },
+
+  displayReview: function(id, seller, name, description, upvotes, rewards, downvotes, hash) {
+    var reviewsRow = $('#reviewsRow');
+    var reviewTemplate = $('#reviewTemplate');
+    reviewTemplate.find('.panel-title').text(name);
+    reviewTemplate.find('.review-description').text(description);
+    reviewTemplate.find('.review-upvotes').text(upvotes);
+    reviewTemplate.find('.review-downvotes').text(downvotes);
+    reviewTemplate.find('.review-rewards').text(web3.utils.fromWei(rewards, "ether") + " ETH");
+    reviewTemplate.find('.btn-buy').attr('data-id', id);
+    reviewTemplate.find('.btn-buy').attr('data-value', 0.0001);
+    let url = `https://ipfs.io/ipfs/${hash}`;
+    reviewTemplate.find('.js-image-url').attr("src", url);
+
+    if (seller == App.account) {
+      reviewTemplate.find('.review-seller').text("You");
+      reviewTemplate.find('.btn-buy').hide();
+      if (reviewTemplate.find('.js-review-footer') && 
+          reviewTemplate.find('.js-review-footer').find(".js-upvote") &&
+          reviewTemplate.find('.js-review-footer').find(".js-upvote").length > 0) {
+      } else {
+        reviewTemplate.find('.js-review-footer').css("display", "none");
+      }
+    } else {
+      reviewTemplate.find('.review-seller').text(seller);
+      reviewTemplate.find('.btn-buy').show();
+    }
+
+    reviewsRow.append(reviewTemplate.html());
+  },
+
+  uploaddoc: async function() {
+    const memoriesFile = document.getElementById('memories').files[0];
+    if (!memoriesFile) {
+      swal('Please select a file to upload');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', memoriesFile);
+
+    const pinataApiKey = 'ecc51856aa2be3341c63';
+    const pinataSecretApiKey = '9b5b368577f5e043b81dd6383314834fbd8e2404760fc5dc0a0791deba489342';
+
+    try {
+      const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+        maxContentLength: 'Infinity',
+        headers: {
+          'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+          pinata_api_key: pinataApiKey,
+          pinata_secret_api_key: pinataSecretApiKey,
+        },
+      });
+
+      const hash = response.data.IpfsHash;
+      swal('File uploaded successfully!', `IPFS Hash: ${hash}`, 'success');
+      $(".js-uploaded-hash").attr("data-hash", hash);
+    } catch (error) {
+      swal('Error uploading file', error.message, 'error');
+    }
+  },
+
+  addReview: function() {
+    var _review_name = $("#review_name").val();
+    var _description = $("#review_description").val();
+    var _hashval = $(".js-uploaded-hash").attr("data-hash");
+    if ((_review_name.trim() == '')) {
+      return false;
+    }
+
+    App.contracts.ReReviews.deployed().then(function(instance) {
+      return instance.addReview(_review_name, _description, _hashval, {
+        from: App.account,
+        gas: 500000
+      });
+    }).then(function(result) {
+      swal("Review added to BlockChain!", "Thanks for your valuable input!", "success");
+      App.reloadReviews(); // Reload reviews after adding a new one
+    }).catch(function(err) {
+      console.error(err);
+      swal("Error", "Failed to add review. Please try again.", "error");
+    });
+  },
+
+  listenToEvents: function() {
+    App.contracts.ReReviews.deployed().then(function(instance) {
+      instance.addReviewEvent({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        if (!error) {
+          $("#events").append('<li class="list-group-item">' + event.args._name + ' is for Review' + '</li>');
+        } else {
+          console.error(error);
+        }
+        App.reloadReviews();
+      });
+
+      instance.viewReviewEvent({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        if (!error) {
+          $("#events").append('<li class="list-group-item">' + event.args._buyer + ' Reviewed ' + event.args._name + '</li>');
+        } else {
+          console.error(error);
+        }
+        App.reloadReviews();
+      });
+    });
+  },
+
+  viewReview: function(flag) {
+    event.preventDefault();
+    var upvote = 0;
+    var downvote = 0;
+    if (flag == "downflag") {
+      downvote = 1;
+    } else {
+      upvote = 1;
+    }
+
+    var _reviewId = $(event.target).data('id');
+    App.contracts.ReReviews.deployed().then(function(instance) {
+      return instance.viewReview(_reviewId, upvote, downvote, {
+        from: App.account,
+        value: web3.utils.toWei("0.0001", "ether"),
+        gas: 500000
+      });
+    }).then(function(result) {
+      swal("Vote Casted Successfully in BLOCKCHAIN", "Thanks for your valuable input!", "success");
+    }).catch(function(err) {
+      console.error(err);
+    });
+  },
+};
+
+$(function() {
+  $(window).load(function() {
+    App.init();
+  });
+});
+
+
+jquery.PersistPlugin.js ===>
+
+(function ($) {
+	$.qparams = function (name) {
+	  var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	  if (results == null) {
+		return null;
+	  } else {
+		return decodeURI(results[1]) || 0;
+	  }
+	};
+  
+	$.persist = async function (data) {
+	  const pinataApiKey = 'ecc51856aa2be3341c63';
+	  const pinataSecretApiKey = '9b5b368577f5e043b81dd6383314834fbd8e2404760fc5dc0a0791deba489342';
+  
+	  const jsonData = JSON.stringify(data);
+	  const formData = new FormData();
+	  formData.append('file', new Blob([jsonData], { type: 'application/json' }));
+  
+	  try {
+		const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+		  maxContentLength: 'Infinity',
+		  headers: {
+			'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+			pinata_api_key: pinataApiKey,
+			pinata_secret_api_key: pinataSecretApiKey,
+		  },
+		});
+		return response.data.IpfsHash;
+	  } catch (error) {
+		console.error('Error uploading to IPFS', error);
+		return null;
+	  }
+	};
+  
+	$.loadIPFS = function (hash) {
+	  $.getJSON("https://gateway.pinata.cloud/ipfs/" + hash, function (data) {
+		$.each(data, function (i, v) {
+		  $("#" + i).val(v);
+		  $("#" + i).attr('readonly', 'readonly');
+		});
+	  });
+	};
+  })(jQuery);
+  
