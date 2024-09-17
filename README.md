@@ -2,21 +2,17 @@
 * Implemented a DApp to create a platform for Reviews & Rewards System on Ethereum Framework.
 
 #TEAM
-* Logeswaran Audhikesavan - https://www.linkedin.com/in/logeswaranaudhikesavan/
-* Kushal Seth             - https://www.linkedin.com/in/sethkushal/
-* Shishir Agarwal         - https://www.linkedin.com/in/shishir0agrawal/
+* Samir Jumade https://www.linkedin.com/in/samir-blockchain/
 
 # GitHub Page
- Local instance of (https://github.com/LogeswaranAudhikesavan/chainreviews/)
+ Local instance of (https://github.com/samiejumade/Blockchain_Powered_Rewards_And_Ratings.git)
  
 # Youtube Link for Video Demonstration
   https://www.youtube.com/watch?v=cTzEoCjJRQM
 
-# PowerPoint Presentation
-  https://www.slideshare.net/shishiragrawal5/ethexplorer
 
 # Inspiration:
-* ETHIndia Hackathon
+* AIRC Woxsen
 
 # What it does:
 * Any users, will be able to submit their reviews on any products/services.- They will be represented as Reviewers.
@@ -26,8 +22,9 @@
 * Reviewers cannot upvote/downvote their own reviews, which helps eliminate fake review counts
 
 # STEPS to Install / Setup
-1) Clone the repositories https://github.com/LogeswaranAudhikesavan/chainreviews.git using following command
-git clone https://github.com/LogeswaranAudhikesavan/chainreviews.git
+1) Clone the repositories https://github.com/samiejumade/Blockchain_Powered_Rewards_And_Ratings.git
+ using following command
+git clone https://github.com/samiejumade/Blockchain_Powered_Rewards_And_Ratings.git
 2) do run "npm install" command to ensure node packages are up-to-date & in sync
 3) Ensure you have "Ganache" & It is running status
 4) Ensure you have "MetaMask" extensions added into chrome & enabled custom RPC to sync the accounts with Ganache
